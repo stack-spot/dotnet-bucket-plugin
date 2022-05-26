@@ -1,0 +1,1 @@
+# dotnet-bucket-app-plugin
