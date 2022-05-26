@@ -1,17 +1,3 @@
-## **Visão Geral**
-### **dotnet-bucket-app-plugin**
-
-O **dotnet-bucket-app-plugin** adiciona em uma stack a capacidade de provisionar o uso do Amazon Simple Storage Service (S3) seja recuperando, salvando ou apagando objetos.
-
-## **Uso**
-
-#### **Pré-requisitos**
-Para utilizar esse plugin é necessário ter uma stack dotnet criada pelo `CLI` do `StackSpot` que você pode baixar [**aqui**](https://stackspot.com/).
-
-Ter instalado:
-- .NET 5 ou 6 
-- O template `dotnet-api-template` ou o `dotnet-worker-template` deverá estar aplicado para você conseguir utilizar este plugin.
-
 #### **Inputs**
 
 * RegionEndpoint - Endpoint regional que será utilizado para requisitar o S3 - Campo Obrigatório.
@@ -158,6 +144,3 @@ Após a criação do contâiner, crie um bucket para realizar os testes com o co
 ```bash
 aws --endpoint-url=http://localhost:4566  --region=sa-east-1 s3 mb s3://[NOME DO BUCKET]
 ```
-
-### **Implementação**
-- [**Nuget**](https://www.nuget.org/packages/StackSpot.Bucket.S3/)
