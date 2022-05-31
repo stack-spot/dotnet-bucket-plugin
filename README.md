@@ -1,7 +1,5 @@
 ## **Visão Geral**
-### **dotnet-bucket-app-plugin**
-
-O **dotnet-bucket-app-plugin** adiciona em uma stack a capacidade de provisionar o uso do Amazon Simple Storage Service (S3) seja recuperando, salvando ou apagando objetos.
+O **dotnet-bucket-plugin** adiciona em uma stack a capacidade de provisionar o uso do Amazon Simple Storage Service (S3) seja recuperando, salvando ou apagando objetos.
 
 ## **Uso**
 
