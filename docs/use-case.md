@@ -1,1 +1,1 @@
-O **dotnet-bucket-plugin** adiciona em uma stack a capacidade de provisionar o uso do Amazon Simple Storage Service (S3) seja recuperando, salvando ou apagando objetos.
+O plugin **`dotnet-bucket-plugin`** adiciona em uma Stack a capacidade de provisionar o uso do **Amazon Simple Storage Service** (S3), seja recuperando, salvando ou apagando objetos.

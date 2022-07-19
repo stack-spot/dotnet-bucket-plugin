@@ -1,36 +1,45 @@
 ## **Visão Geral**
-O **dotnet-bucket-plugin** adiciona em uma stack a capacidade de provisionar o uso do Amazon Simple Storage Service (S3) seja recuperando, salvando ou apagando objetos.
+O plugin **`dotnet-bucket-plugin`** adiciona em uma Stack a capacidade de provisionar o uso do **Amazon Simple Storage Service** (S3), seja recuperando, salvando ou apagando objetos.
 
 ## **Uso**
 
 #### **Pré-requisitos**
-Para utilizar esse plugin é necessário ter uma stack dotnet criada pelo `CLI` do `StackSpot` que você pode baixar [**aqui**](https://stackspot.com/).
+Para utilizar este plugin é preciso ter instalado na sua máquina os itens abaixo:
 
-Ter instalado:
-- .NET 5 ou 6 
-- O template `dotnet-api-template` ou o `dotnet-worker-template` deverá estar aplicado para você conseguir utilizar este plugin.
+- Uma Stack dotNet criada pelo [**STK CLI**](https://stackspot.com/);  
+- .NET 5 ou 6;   
+- O template **`dotnet-api-template`** ou o **`dotnet-worker-template`** já aplicados. 
 
-#### **Inputs**
+### **Inputs configurados automaticamente**  
 
-* RegionEndpoint - Endpoint regional que será utilizado para requisitar o S3 - Campo Obrigatório.
+As etapas abaixo são configuradas automaticamente pelo plugin.   
 
-Você pode sobrescrever a configuração padrão adicionando a seção `S3` em seu `appsettings.json`. Os valores aceitáveis você pode encontrar [aqui](https://docs.aws.amazon.com/pt_br/pt_br/AWSEC2/latest/WindowsGuide/using-regions-availability-zones.html#concepts-available-regions).
+- #### Aplicação do `RegionEndpoint`  
+O endpoint regional será utilizado para requisitar o **`S3`**. 
 
 ```json
   "S3": {
       "RegionEndpoint": "sa-east-1"
   }
 ```
+> É possível sobrescrever a configuração padrão adicionando a seção **`S3`** no seu **`appsettings.json`**. Os valores aceitáveis são encontrados [aqui](https://docs.aws.amazon.com/pt_br/pt_br/AWSEC2/latest/WindowsGuide/using-regions-availability-zones.html#concepts-available-regions).
 
-Adicione ao seu `IServiceCollection` via `services.AddBucketS3()` no `Startup` da aplicação ou `Program` tendo como parêmetro de entrada `IConfiguration` e `IWebHostEnvironment`. 
+- #### Configuração do `IServiceCollection`
+
+A configuração abaixo será feita no **`IServiceCollection`**, através do `services.AddBucketS3()`, no `Startup` da aplicação ou do `Program`. Ela terá **`IConfiguration`** e **`IWebHostEnvironment`** como parâmetros de entrada. 
 
 ```csharp
 services.AddBucketS3(Configuration);
 ```
 
-#### **Operações**
+### **Exemplos de aplicação do plugin**
 
-*  DeleteAsync - Remove a versão nula(se houver) de um objeto e insere um marcador de exclusão, tornando a versão mais recente do objeto. Em caso de não haver uma versão nula, nenum objeto é removido.
+Confira abaixo alguns exemplos de aplicação do **`dotnet-bucket-plugin`**:  
+
+- #### DeleteAsync  
+Se houver uma versão nula de um objeto, ela é removida e um marcador de exlusão é inserido. Isso atualiza a versão do objeto. Caso não haja uma versão nula, nenhum objeto é removido ou atualizado. 
+
+Confira a execução abaixo:  
 
 ```csharp
 public class Service
@@ -54,7 +63,10 @@ public class Service
 }
 ```
 
-* GetStreamAsync - Recupera um objeto.
+- #### GetStreamAsync  
+É responsável por recuperar um objeto.
+
+Confira a execução abaixo:  
 
 ```csharp
 public class Service
@@ -88,7 +100,10 @@ public class Service
 }
 ```
 
-* UploadAsync - Adiciona um objeto ao bucket.
+- #### UploadAsync  
+Adiciona um objeto ao bucket.
+
+Confira a execução abaixo:  
 
 ```csharp
 public class Service
@@ -129,13 +144,13 @@ public class Service
 }
 ```
 
+- #### Execução em ambiente local  
 
-#### 4. Ambiente local
+Para fazer o desenvolvimento local do plugin, crie um contêiner com a imagem do [**LocalStack**](https://github.com/localstack/localstack). 
 
-* Esta etapa não é obrigatória.
-* Recomendamos, para o desenvolvimento local, a criação de um contâiner com a imagem do [Localstack](https://github.com/localstack/localstack). 
-* Para o funcionamento local você deve preencher a variável de ambiente `LOCALSTACK_CUSTOM_SERVICE_URL` com o valor da url do serviço. O valor padrão do localstack é http://localhost:4566.
-* Abaixo um exemplo de arquivo `docker-compose` com a criação do contâiner: 
+Para que funcione localmente, preencha a variável de ambiente **`LOCALSTACK_CUSTOM_SERVICE_URL`** com o valor da URL do serviço. O valor padrão do LocalStack é **http://localhost:4566**.
+
+Confira abaixo um exemplo de arquivo **`docker-compose`** com a criação do contêiner: 
 
 ```yaml
 version: '2.1'
@@ -151,11 +166,12 @@ services:
       - DEFAULT_REGION=sa-east-1
 ```
 
-Após a criação do contâiner, crie um bucket para realizar os testes com o componente. Recomendamos que você tenha instalado em sua estação o [AWS CLI](https://aws.amazon.com/pt/cli/). Abaixo um exemplo de comando para criação de um bucket:
+Depois de criar o contêiner, crie um bucket para fazer os testes com o componente. 
+
+É recomendado que você tenha instalado em sua estação o [**AWS CLI**](https://aws.amazon.com/pt/cli/). 
+
+Confira abaixo um exemplo de comando para criar um bucket:
 
 ```bash
 aws --endpoint-url=http://localhost:4566  --region=sa-east-1 s3 mb s3://[NOME DO BUCKET]
 ```
-
-### **Implementação**
-- [**Nuget**](https://www.nuget.org/packages/StackSpot.Bucket.S3/)
